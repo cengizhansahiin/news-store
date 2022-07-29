@@ -13,7 +13,6 @@ import tr.com.id3.news.newsstore.model.Article;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
-import java.io.DataInput;
 import java.io.IOException;
 
 @Service

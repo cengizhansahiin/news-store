@@ -29,44 +29,18 @@ import javax.jms.ConnectionFactory;
 public class ProjectConfig {
     @Value("${spring.activemq.broker-url}")
     String BROKER_URL;
-    @Value("${spring.activemq.user}")
-    String BROKER_USERNAME;
-    @Value("${spring.activemq.password}")
-    String BROKER_PASSWORD;
 
     @Bean
     public ActiveMQConnectionFactory connectionFactory(){
         ActiveMQConnectionFactory connectionFactory = new  ActiveMQConnectionFactory();
         connectionFactory.setTrustAllPackages(true);
         connectionFactory.setBrokerURL(BROKER_URL);
-        connectionFactory.setPassword(BROKER_USERNAME);
-        connectionFactory.setUserName(BROKER_PASSWORD);
         return connectionFactory;
     }
 
     @Bean
-    public MessageConverter messageConverter() {
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        converter.setTargetType(MessageType.TEXT);
-        converter.setObjectMapper(new ObjectMapper());
-        return converter;
-    }
-
-    @Bean
-    public JmsListenerContainerFactory jmsListenerContainerFactory(ConnectionFactory connectionFactory,
-                                                                   DefaultJmsListenerContainerFactoryConfigurer configurer) {
-        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-        configurer.configure(factory, connectionFactory);
-        return factory;
-    }
-
-    @Bean
     public JmsTemplate jmsTemplate() {
-        JmsTemplate jmsTemplate = new JmsTemplate();
-        jmsTemplate.setConnectionFactory(connectionFactory());
-        jmsTemplate.setDeliveryPersistent(true);
-        jmsTemplate.setMessageConverter(messageConverter());
-        return jmsTemplate;
+        return new JmsTemplate(connectionFactory());
     }
 
 

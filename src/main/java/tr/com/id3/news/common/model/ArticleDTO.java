@@ -1,12 +1,14 @@
-package tr.com.id3.news.newsstore.model;
+package tr.com.id3.news.common.model;
 
 
 import lombok.Data;
 
 import javax.persistence.Entity;
+import java.io.Serializable;
 
 @Data
-public class ArticleDTO {
+public class ArticleDTO implements Serializable {
+
     private String author;
     private String title;
     private String description;
